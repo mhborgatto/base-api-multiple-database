@@ -1,0 +1,7 @@
+{
+  "missing.authorization": "Cabeçalho de autorização não informado",
+  "incorrect.authentication": "Autenticação básica inválida",
+  "incorrect.static.token": "Token estático incorreto",
+  "incorrect.token": "Token incorreto",
+  "unauthorized": "Não autorizado"
+}

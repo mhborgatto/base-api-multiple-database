@@ -1,0 +1,13 @@
+{
+  "git": {
+    "requireCleanWorkingDir": false,
+    "tagName": "base-api-${version}"
+  },
+  "github": {
+    "release": true,
+    "releaseName": "Release base-api ${version}"
+  },
+  "npm": {
+    "publish": false
+  }
+}
