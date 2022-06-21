@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+
+  base-api:
+    image: base-api
+    depends_on:
+      - mysql
+    ports:
+      - 50130:50130
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      APP_PORT: 50130
+      DB_HOST: mysql

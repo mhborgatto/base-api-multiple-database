@@ -1,0 +1,80 @@
+name: Node CI
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:  
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - uses: szenius/set-timezone@v1.0
+      with:
+        timezoneLinux: "America/Sao_Paulo"
+    - name: Setup MariaDB
+      run: |
+        docker run -d -p 3306:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mariadb:latest --default-time-zone=-03:00
+    - name: Installing dependencies
+      run: |
+        npm install
+    - name: Waiting 10 seconds to MariaDB starts
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '10s'
+    - name: Creating Databases
+      run: |
+        npm run createDatabases 
+        npm run migrateDatabases 
+        npm run seedDatabases
+      env:
+        APP_PORT: 50136
+        STATIC_TOKEN: ${{ secrets.STATIC_TOKEN }}
+        DATABASE1_HOST: localhost
+        DATABASE1_PORT: 3306
+        DATABASE1_USERNAME: root
+        DATABASE1_PASSWORD: ''
+        DATABASE2_HOST: localhost
+        DATABASE2_PORT: 3306
+        DATABASE2_USERNAME: root
+        DATABASE2_PASSWORD: ''
+        DATABASE3_HOST: localhost
+        DATABASE3_PORT: 3306
+        DATABASE3_USERNAME: root
+        DATABASE3_PASSWORD: ''
+        DATABASE4_HOST: localhost
+        DATABASE4_PORT: 3306
+        DATABASE4_USERNAME: root
+        DATABASE4_PASSWORD: ''
+        DATABASE5_HOST: localhost
+        DATABASE5_PORT: 3306
+        DATABASE5_USERNAME: root
+        DATABASE5_PASSWORD: ''
+    - name: Running tests
+      run: npm test -- --forceExit
+      env:
+        APP_PORT: 50136
+        STATIC_TOKEN: ${{ secrets.STATIC_TOKEN }}
+        DATABASE1_HOST: localhost
+        DATABASE1_PORT: 3306
+        DATABASE1_USERNAME: root
+        DATABASE1_PASSWORD: ''
+        DATABASE2_HOST: localhost
+        DATABASE2_PORT: 3306
+        DATABASE2_USERNAME: root
+        DATABASE2_PASSWORD: ''
+        DATABASE3_HOST: localhost
+        DATABASE3_PORT: 3306
+        DATABASE3_USERNAME: root
+        DATABASE3_PASSWORD: ''
+        DATABASE4_HOST: localhost
+        DATABASE4_PORT: 3306
+        DATABASE4_USERNAME: root
+        DATABASE4_PASSWORD: ''
+        DATABASE5_HOST: localhost
+        DATABASE5_PORT: 3306
+        DATABASE5_USERNAME: root
+        DATABASE5_PASSWORD: ''
