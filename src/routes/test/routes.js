@@ -20,15 +20,13 @@ const testRouter = express.Router()
  *         description: The company promotions object
  *         schema:
  *           type: object
- *           $ref: '#/definitions/TestRequest'
+ *           $ref: '#/definitions/SampleRequest'
  *     responses:
  *        '200':
  *          description: Sucessful
  *          schema:
  *            type: object
- *            properties:
- *              id:
- *               type: integer
+ *            $ref: '#/definitions/SampleResponse'
  *        '208':
  *          description: Already exists
  *        '400':
@@ -45,10 +43,16 @@ testRouter.post('/base-api/samples', verifyToken, samplesController.create)
 /**
  * @swagger
  * definitions:
- *   TestRequest:
+ *   SampleRequest:
  *     properties:
  *       description:
  *         type: string
+ *         example: "Descrição de testes"
+ *   SampleResponse:
+ *     properties:
+ *       id:
+ *         type: integer
+ *         example: 1
  */
 
 export default testRouter
