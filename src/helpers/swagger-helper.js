@@ -14,8 +14,13 @@ export function exportSwaggerApis() {
     .forEach(file => {
       const posRoutes = file.indexOf('/routes/')
       const path = file.substring(posRoutes, file.length)
-      apis.push(`./dist${ path }`)
-      apis.push(`./src${ path }`)
+      var isWin = process.platform === 'win32'
+      if (isWin) {
+        apis.push(`${ path }`)
+      } else {
+        apis.push(`./dist${ path }`)
+        apis.push(`./src${ path }`)
+      }
     })
 
   return apis
