@@ -5,7 +5,7 @@ import express from 'express'
 import { verifyToken } from '../../services/authorization-service'
 import * as samplesController from './samples-controller'
 
-const testRouter = express.Router()
+const sampleRouter = express.Router()
 
 /**
  * @swagger
@@ -14,6 +14,8 @@ const testRouter = express.Router()
  *     summary: The endpoint used to create test
  *     tags:
  *       - Companies
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: body
  *         name: promotions
@@ -38,7 +40,7 @@ const testRouter = express.Router()
  *        '500':
  *          description: Something went wrong
  */
-testRouter.post('/base-api/samples', verifyToken, samplesController.create)
+sampleRouter.post('/base-api/samples', verifyToken, samplesController.create)
 
 /**
  * @swagger
@@ -55,4 +57,4 @@ testRouter.post('/base-api/samples', verifyToken, samplesController.create)
  *         example: 1
  */
 
-export default testRouter
+export default sampleRouter
